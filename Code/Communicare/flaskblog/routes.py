@@ -10,6 +10,11 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 @app.route('/')
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
+
 @app.route('/home')
 def home():
     page = request.args.get('page', 1, type=int)
@@ -54,7 +59,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('index'))
 
 
 
