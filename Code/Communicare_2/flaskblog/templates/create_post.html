@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">New Post</legend>
+
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.title.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                        
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.location.label(class="form-control-label") }}
+                    {% if form.location.errors %}
+                        {{ form.location(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.location.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                        
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.phone_no.label(class="form-control-label") }}
+                    {% if form.phone_no.errors %}
+                        {{ form.phone_no(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.phone_no.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                    {{ form.phone_no(class="form-control form-control-lg") }}
+                        
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label") }}
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div> 
+                    {% else %}
+                    {{ form.content(class="form-control form-control-lg") }}
+                        
+                    {% endif %}
+                </div>
+
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+
+        </form> 
+    </div>
+    <script>
+    
+        var x = document.getElementById("hidden_field2");
+        navigator.geolocation.getCurrentPosition(showPosition);
+        
+        function showPosition(position) {
+          x.value = position.coords.latitude.toString() + 
+          "," + position.coords.longitude.toString();
+        }
+    </script>
+
+{% endblock content %}
