@@ -8,7 +8,7 @@ from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, Post
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 import sys
-import random
+from geopy.geocoders import Nominatim
 
 
 
@@ -197,13 +197,13 @@ def new_post():
     if form.validate_on_submit():
         post = Post(title = form.title.data, location = form.location.data, phone_no = form.phone_no.data,  content= form.content.data, author= current_user)
         print('Location', file=sys.stderr)
-        print(form.location2.data, file=sys.stderr)
-        #id_x = random.randint(0,1000)*random.randint(0,100)*0.001
-        #post_x = {'title': form.title.data , 'location': form.location.data, 'phone_no':form.phone_no.data, 'content':form.content.data, 'author': current_user, 'username': current_user.username , 'date_posted': datetime.today().strftime('%Y-%m-%d') , 'location2': form.location2.data, 'id': id_x }
-        post.location2 = form.location2.data
+        print(form.location.data, file=sys.stderr)
+        geolocator = Nominatim(user_agent="app")
+        location = geolocator.geocode(form.location.data)
+        print(location.latitude, location.longitude, file=sys.stderr)
+        post.location2 = str(location.latitude)+','+str(location.longitude)
         db.session.add(post)
         db.session.commit()
-        #Post_d.append(post_x)
         flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
     return render_template('create_post.html', title= 'New Post', form=form)
